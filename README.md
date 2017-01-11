@@ -2,7 +2,7 @@
 
 A Slots game with RPG elements.
 
-[![Example Image](https://raw.githubusercontent.com/andre-lima/Dragon-Slots/master/sword.png)](#features)
+[![Example Image](https://github.com/andre-lima/Dragon-Slots/blob/master/images/sword.png?raw=true)](#features)
 
 
 ## Rules
