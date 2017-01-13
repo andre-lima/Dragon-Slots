@@ -16,10 +16,13 @@ const images_array = [
 ];
 
 //Array of arrays, where each array element keeps the tiles of a winning condition
-let victoryElements = [];
+let tilesInSequence = [];
 
 //All tiles in the game
 let tiles = [];
+
+//Is any of the tiles locked
+var isAnyLocked = 0; //TODO: fix this variable. make it accessible from a tile object
 
 //Dictionary associating the card type to the card object
 let cards = {
@@ -27,56 +30,56 @@ let cards = {
         title: "WILD",
         damage: 0,
         multiplier: false,
-        probability: 3,
+        probability: 1,
         image: "images/wild.png"
     },
     sword: {
         title: "sword",
         damage: 5,
         multiplier: false,
-        probability: 10,
+        probability: 3,
         image: "images/sword.png"
     },
     shield: {
         title: "shield",
         damage: 5,
         multiplier: false,
-        probability: 10,
+        probability: 3,
         image: "images/shield.png"
     },
     bow: {
         title: "bow",
         damage: 5,
         multiplier: false,
-        probability: 10,
+        probability: 3,
         image: "images/bow.png"
     },
     sneak: {
         title: "sneak",
         damage: 5,
         multiplier: false,
-        probability: 10,
+        probability: 3,
         image: "images/sneak.png"
     },
     magic: {
         title: "magic",
         damage: 5,
         multiplier: false,
-        probability: 10,
+        probability: 3,
         image: "images/magic.png"
     },
     heal: {
         title: "heal",
         damage: 0,
         multiplier: false,
-        probability: 10,
+        probability: 3,
         image: "images/heal.png"
     },
     claw: {
         title: "claw",
         damage: 5,
         multiplier: false,
-        probability: 10,
+        probability: 5,
         image: "images/claw.png"
     }
 };
@@ -90,7 +93,7 @@ var Tile = {
     //The card object associated to this tile
     card: undefined,
 
-    //The card object associated to this tile
+    //The coordinates of this tile in x and y
     coord: undefined,
 
     //Is the card locked?
@@ -114,11 +117,11 @@ var Tile = {
         tile.setAttributeNode(att);
 
         let img = document.createElement("img");
-        img.src = "https://dl.dropboxusercontent.com/u/62133801/dungeon.png";
+        img.src = "images/dungeon.png";
 
         this.element = tile;
         this.card = "";
-        this.coord = "tile" + line + "_" + col;
+        this.coord = line + "," + col;
 
         parent.appendChild(tile);
         tile.appendChild(img);
@@ -139,12 +142,14 @@ var Tile = {
     lock: function() {
         this.locked = true;
         this.element.classList.add('locked');
+        window.inAnyLocked++;
     },
 
     //Locks the tile
     unlock: function() {
         this.locked = false;
         this.element.classList.remove('locked');
+        window.inAnyLocked--;
     },
 
 }
@@ -194,13 +199,9 @@ const victoryConditions = [
     ]
 ];
 
-//Rolling the same elements as the victory conditions. If needs to roll different indexes,
-//needs to create a new array of arrays.
-//const rollIndexes = victoryConditions;
-
 //Gets the tile objects based on the victory conditions
 //and returns the array of arrays
-function getVictoryElements() {
+function getTilesInSequence() {
     let elements = [];
 
     for (let condition of victoryConditions) {
@@ -284,7 +285,7 @@ var GameSlots = function() {
         let points = 0;
         attackStack = [];
 
-        for (let elements of victoryElements) {
+        for (let elements of tilesInSequence) {
 
             let winner = true;
             let usingWild = false;
@@ -362,16 +363,20 @@ window.onload = function init() {
     document.getElementById('roll').addEventListener("click", game.rollAgain, false);
     document.querySelector("#slots").addEventListener("click", lockTiles, false);
 
-    victoryElements = getVictoryElements();
+    tilesInSequence = getTilesInSequence();
 
     //Handles button clicks to roll the specific line or column
     function lockTiles(e) {
-
         let tileCoord = e.target.parentNode.getAttribute("data-tile").split(",");
 
         let tile = tiles[tileCoord[0]][tileCoord[1]];
 
-        tile.lock();
+        if(!tile.locked)
+            tile.lock();
+        else {
+            tile.unlock();
+        }
+        console.log(window.isAnyLocked); //TODO: fix this variable
 
         e.stopPropagation();
     }
