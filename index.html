@@ -18,28 +18,29 @@
     </div>
     -->
 
-    <table>
-        <tr id="dragon">
-            <td>Dragon</td>
-            <td id="dragon-health">1000</td>
-        </tr>
-        <tr id="warrior" class="heroes">
-            <td>Warrior</td>
-            <td id="warrior-health">100</td>
-        </tr>
-        <tr id="rogue" class="heroes">
-            <td>Rogue</td>
-            <td id="rogue-health">80</td>
-        </tr>
-        <tr id="wizard" class="heroes">
-            <td>Wizard</td>
-            <td id="wizard-health">50</td>
-        </tr>
-        <tr id="money">
-            <td>Current wallet:</td>
-            <td id="money-amount">$100.00</td>
-        </tr>
-    </table>
+    <div id="characters">
+        <div id="heroes">
+            <div class="hero" id="warrior">
+                <div><img src="images/warrior.png" alt="warrior" /></div>
+                <p class="health" id="warrior-health">100 </p>
+                <img src="images/shield.png" alt="shield" id="warrior-shield" class="hero-shields hide" />
+            </div>
+            <div class="hero" id="rogue">
+                <div><img src="images/rogue.png" alt="rogue" /></div>
+                <p class="health" id="rogue-health">80 </p>
+                <img src="images/shield.png" alt="shield" id="rogue-shield" class="hero-shields hide" />
+            </div>
+            <div class="hero" id="wizard">
+                <div><img src="images/wizard.png" alt="wizard" /></div>
+                <p class="health" id="wizard-health">50 </p>
+                <img src="images/shield.png" alt="shield" id="wizard-shield" class="hero-shields hide" />
+            </div>
+        </div>
+        <div id="dragon" class="">
+            <div><img src="images/dragon.png" alt="dragon" /></div>
+            <p class="health" id="dragon-health">1000</p>
+        </div>
+    </div>
 
     <div id="slots"></div>
 

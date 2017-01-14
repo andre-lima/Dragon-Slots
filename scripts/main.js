@@ -35,13 +35,22 @@ function Character(classType, health) {
     this.classType = classType;
     this.health = health;
     this.isShielded = false;
+    this.htmlElement = document.getElementById(this.classType);
     this.receiveDamage = function(damage) {
         this.health -= damage;
         document.getElementById(this.classType + "-health").innerHTML = this.health;
+
+        let element = this.htmlElement
+        element.classList.add('hit');
+        setTimeout(function() {element.classList.remove('hit');},700);
     }
     this.healDamage = function(amount) {
         this.health += amount;
         document.getElementById(this.classType + "-health").innerHTML = this.health;
+
+        let element = this.htmlElement
+        element.classList.add('healing');
+        setTimeout(function() {element.classList.remove('healing');},700);
     }
 }
 
@@ -60,71 +69,67 @@ let heroes = [
 let cards = {
     wild: {
         title: "WILD",
-        attack: function (){console.error("attacking from a wild card...wut???")},
+        action: function (){console.error("attacking from a wild card...wut???")},
         damage: 0,
-        multiplier: false,
         probability: 1,
         image: "images/wild.png"
     },
     sword: {
         title: "sword",
-        attack: function (){dragon.receiveDamage(this.damage);},
+        action: function (){dragon.receiveDamage(this.damage);},
         damage: 10,
-        multiplier: false,
         probability: 3,
         image: "images/sword.png"
     },
     shield: {
         title: "shield",
-        attack: function (){heroes.forEach(function(hero) {hero.isShielded = true;})},
+        action: function (){ heroes.forEach(function(hero) {
+            hero.isShielded = true;
+            document.getElementById(hero.classType + "-shield").classList.remove("hide");
+        })},
         damage: 10,
-        multiplier: false,
         probability: 3,
         image: "images/shield.png"
     },
     bow: {
         title: "bow",
-        attack: function (){dragon.receiveDamage(this.damage);},
+        action: function (){dragon.receiveDamage(this.damage);},
         damage: 10,
-        multiplier: false,
         probability: 3,
         image: "images/bow.png"
     },
     sneak: {
         title: "sneak",
-        attack: function (){dragon.receiveDamage(this.damage);},
+        action: function (){dragon.receiveDamage(this.damage);},
         damage: 10,
-        multiplier: false,
         probability: 3,
         image: "images/sneak.png"
     },
     magic: {
         title: "magic",
-        attack: function (){dragon.receiveDamage(this.damage);},
+        action: function (){dragon.receiveDamage(this.damage);},
         damage: 10,
-        multiplier: false,
         probability: 3,
         image: "images/magic.png"
     },
     heal: {
         title: "heal",
-        attack: function (){ let self = this; heroes.forEach(function(hero) {hero.healDamage(self.damage);})},
+        action: function (){ let self = this; heroes.forEach(function(hero) {hero.healDamage(self.damage);})},
         damage: 10,
-        multiplier: false,
         probability: 3,
         image: "images/heal.png"
     },
     claw: {
         title: "claw",
-        attack: function (){
+        action: function (){
             let hero = heroes[Math.floor(Math.random()*heroes.length)];
-            let damage = hero.isShielded ? this.damage/2 : this.damage;
+            let damage = hero.isShielded ? Math.floor(this.damage/2) : this.damage;
             hero.isShielded = false;
+            document.getElementById(hero.classType + "-shield").classList.add("hide");
             hero.receiveDamage(damage);
         },
         damage: 10,
-        multiplier: false,
-        probability: 5,
+        probability: 3,
         image: "images/claw.png"
     }
 };
@@ -393,7 +398,7 @@ var GameSlots = function() {
 
     function performAttacks(attacks) {
         for(let a of attacks) {
-            cards[a].attack();
+            cards[a].action();
         }
         console.log(heroes);
     }

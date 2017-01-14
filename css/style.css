@@ -59,24 +59,49 @@ canvas {
     height: 250px;
 }
 
-table {
-    margin: 10px auto;
-    padding: 20px;
+.hero, #dragon {
+    border: 8px solid white;
 }
 
-#dragon {
-    color: red;
-}
-.heroes {
-    color: blue;
-}
-#money {
-    color: green;
-}
-
-td{
-    transition: all .4s;
-}
 .healing {
-    background: green;
+    border: 8px solid green !important;;
+}
+.hit {
+    border: 8px solid red !important;
+}
+.shielded {
+    border: 8px solid blue !important;
+}
+
+.hero img {
+    width: 60px;
+}
+
+#dragon img {
+    width: 300px;
+}
+
+#characters {
+    max-width: 600px;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.health {
+    font-size: 20pt;
+    color: white;
+    text-shadow: 2px 2px #222;
+}
+
+.hero-shields {
+    width: 20px !important;
+    display: inline;
+}
+
+p { display: inline;}
+
+.hide {
+    display: none;
 }
