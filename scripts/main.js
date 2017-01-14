@@ -26,7 +26,6 @@ var isAnyLocked = 0; //TODO: fix this variable. make it accessible from a tile o
 
 function attackEffect(target) {
     for(let t of target){
-        console.log(target);
         t.causeDamage(this.damage);
     }
 }
@@ -34,10 +33,17 @@ function attackEffect(target) {
 function Character(classType, health) {
     this.classType = classType;
     this.health = health;
+    this.maxHealth = health;
     this.isShielded = false;
+    this.isDead = false;
     this.htmlElement = document.getElementById(this.classType);
     this.receiveDamage = function(damage) {
         this.health -= damage;
+        if(this.health <= 0){
+            this.health = 0;
+            this.isDead = true;
+        }
+
         document.getElementById(this.classType + "-health").innerHTML = this.health;
 
         let element = this.htmlElement
@@ -45,7 +51,13 @@ function Character(classType, health) {
         setTimeout(function() {element.classList.remove('hit');},700);
     }
     this.healDamage = function(amount) {
+        if(this.isDead) return;
+
         this.health += amount;
+        if(this.health >= this.maxHealth){
+            this.health = this.maxHealth;
+        }
+
         document.getElementById(this.classType + "-health").innerHTML = this.health;
 
         let element = this.htmlElement
@@ -69,13 +81,15 @@ let heroes = [
 let cards = {
     wild: {
         title: "WILD",
-        action: function (){console.error("attacking from a wild card...wut???")},
+        character: "undefined",
+        action: function (){console.error("attacking from a wild card...wut???");},
         damage: 0,
         probability: 1,
         image: "images/wild.png"
     },
     sword: {
         title: "sword",
+        character: warrior,
         action: function (){dragon.receiveDamage(this.damage);},
         damage: 10,
         probability: 3,
@@ -83,23 +97,29 @@ let cards = {
     },
     shield: {
         title: "shield",
-        action: function (){ heroes.forEach(function(hero) {
-            hero.isShielded = true;
-            document.getElementById(hero.classType + "-shield").classList.remove("hide");
+        character: warrior,
+        action: function (){
+            heroes.forEach(function(hero) {
+                if(!hero.isDead){
+                    hero.isShielded = true;
+                    document.getElementById(hero.classType + "-shield").classList.remove("hide");
+                }
         })},
-        damage: 10,
+        damage: 0,
         probability: 3,
         image: "images/shield.png"
     },
     bow: {
         title: "bow",
+        character: rogue,
         action: function (){dragon.receiveDamage(this.damage);},
-        damage: 10,
+        damage: 5,
         probability: 3,
         image: "images/bow.png"
     },
     sneak: {
         title: "sneak",
+        character: rogue,
         action: function (){dragon.receiveDamage(this.damage);},
         damage: 10,
         probability: 3,
@@ -107,6 +127,7 @@ let cards = {
     },
     magic: {
         title: "magic",
+        character: wizard,
         action: function (){dragon.receiveDamage(this.damage);},
         damage: 10,
         probability: 3,
@@ -114,23 +135,38 @@ let cards = {
     },
     heal: {
         title: "heal",
+        character: wizard,
         action: function (){ let self = this; heroes.forEach(function(hero) {hero.healDamage(self.damage);})},
-        damage: 10,
+        damage: 5,
         probability: 3,
         image: "images/heal.png"
     },
     claw: {
         title: "claw",
+        character: dragon,
         action: function (){
-            let hero = heroes[Math.floor(Math.random()*heroes.length)];
+            let hero;
+            do {
+                hero = heroes[Math.floor(Math.random()*heroes.length)];
+            } while(hero.isDead);
             let damage = hero.isShielded ? Math.floor(this.damage/2) : this.damage;
             hero.isShielded = false;
             document.getElementById(hero.classType + "-shield").classList.add("hide");
             hero.receiveDamage(damage);
         },
-        damage: 10,
+        damage: 15,
         probability: 3,
         image: "images/claw.png"
+    },
+    chest: {
+        title: "chest",
+        character: "undefined",
+        action: function (){
+            console.log("+1 gold!");
+        },
+        damage: 0,
+        probability: 1,
+        image: "images/chest.png"
     }
 };
 
@@ -400,7 +436,7 @@ var GameSlots = function() {
         for(let a of attacks) {
             cards[a].action();
         }
-        console.log(heroes);
+
     }
 
     function init() {

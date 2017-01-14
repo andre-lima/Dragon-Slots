@@ -6,11 +6,13 @@ html, body, div, img, p, h1, h2, h3, h4 {
     font-size: 16pt;
 }
 
-html {background: white;}
+html {
+    background-image: url("../images/tile_dungeon.png");
+}
 
 body {
+
     max-width: 800px;
-    background: #DDD;
     margin: 0 auto;
     padding: 15px;
     height: 95vh;
@@ -19,14 +21,14 @@ body {
 #slots {
     margin: 0 auto;
     display: flex;
-    width: 390px;
+    width: 350px;
     flex-wrap: wrap;
 }
 
 .tile {
     margin: 0;
     padding: 0;
-    flex-basis: 120px;
+    flex-basis: 100px;
     color: white;
     transition: all .4s;
     text-align: center;
@@ -64,7 +66,7 @@ canvas {
 }
 
 .healing {
-    border: 8px solid green !important;;
+    border: 8px solid green !important;
 }
 .hit {
     border: 8px solid red !important;
@@ -104,4 +106,26 @@ p { display: inline;}
 
 .hide {
     display: none;
+}
+
+@media screen and (max-width: 750px)
+{
+    #characters {
+        max-width: 90%;
+        margin: 5px auto;
+    }
+    .hero img {
+        width: 40px;
+    }
+
+    #dragon img {
+        width: 200px;
+    }
+
+    .health {
+        font-size: 14pt;
+        color: white;
+        text-shadow: 1px 1px #222;
+    }
+
 }
