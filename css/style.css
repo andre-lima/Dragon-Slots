@@ -58,3 +58,25 @@ canvas {
     width: 200px;
     height: 250px;
 }
+
+table {
+    margin: 10px auto;
+    padding: 20px;
+}
+
+#dragon {
+    color: red;
+}
+.heroes {
+    color: blue;
+}
+#money {
+    color: green;
+}
+
+td{
+    transition: all .4s;
+}
+.healing {
+    background: green;
+}

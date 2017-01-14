@@ -24,10 +24,43 @@ let tiles = [];
 //Is any of the tiles locked
 var isAnyLocked = 0; //TODO: fix this variable. make it accessible from a tile object
 
+function attackEffect(target) {
+    for(let t of target){
+        console.log(target);
+        t.causeDamage(this.damage);
+    }
+}
+
+function Character(classType, health) {
+    this.classType = classType;
+    this.health = health;
+    this.isShielded = false;
+    this.receiveDamage = function(damage) {
+        this.health -= damage;
+        document.getElementById(this.classType + "-health").innerHTML = this.health;
+    }
+    this.healDamage = function(amount) {
+        this.health += amount;
+        document.getElementById(this.classType + "-health").innerHTML = this.health;
+    }
+}
+
+let dragon = new Character("dragon", 1000);
+let warrior = new Character("warrior", 100);
+let rogue = new Character("rogue", 80);
+let wizard = new Character("wizard", 50);
+
+let heroes = [
+    warrior,
+    rogue,
+    wizard
+]
+
 //Dictionary associating the card type to the card object
 let cards = {
     wild: {
         title: "WILD",
+        attack: function (){console.error("attacking from a wild card...wut???")},
         damage: 0,
         multiplier: false,
         probability: 1,
@@ -35,49 +68,61 @@ let cards = {
     },
     sword: {
         title: "sword",
-        damage: 5,
+        attack: function (){dragon.receiveDamage(this.damage);},
+        damage: 10,
         multiplier: false,
         probability: 3,
         image: "images/sword.png"
     },
     shield: {
         title: "shield",
-        damage: 5,
+        attack: function (){heroes.forEach(function(hero) {hero.isShielded = true;})},
+        damage: 10,
         multiplier: false,
         probability: 3,
         image: "images/shield.png"
     },
     bow: {
         title: "bow",
-        damage: 5,
+        attack: function (){dragon.receiveDamage(this.damage);},
+        damage: 10,
         multiplier: false,
         probability: 3,
         image: "images/bow.png"
     },
     sneak: {
         title: "sneak",
-        damage: 5,
+        attack: function (){dragon.receiveDamage(this.damage);},
+        damage: 10,
         multiplier: false,
         probability: 3,
         image: "images/sneak.png"
     },
     magic: {
         title: "magic",
-        damage: 5,
+        attack: function (){dragon.receiveDamage(this.damage);},
+        damage: 10,
         multiplier: false,
         probability: 3,
         image: "images/magic.png"
     },
     heal: {
         title: "heal",
-        damage: 0,
+        attack: function (){ let self = this; heroes.forEach(function(hero) {hero.healDamage(self.damage);})},
+        damage: 10,
         multiplier: false,
         probability: 3,
         image: "images/heal.png"
     },
     claw: {
         title: "claw",
-        damage: 5,
+        attack: function (){
+            let hero = heroes[Math.floor(Math.random()*heroes.length)];
+            let damage = hero.isShielded ? this.damage/2 : this.damage;
+            hero.isShielded = false;
+            hero.receiveDamage(damage);
+        },
+        damage: 10,
         multiplier: false,
         probability: 5,
         image: "images/claw.png"
@@ -336,11 +381,21 @@ var GameSlots = function() {
             }
 
         }
+        if(attackStack.length > 0)
+            performAttacks(attackStack);
+
         amountOfPlays++;
 
         //Temp statistics
         stats.innerText = "Wins: " + amountOfWins + " (" + (amountOfWins * 100 / amountOfPlays).toFixed() + "%)" + "; Dragon attacks: " + dragonAttacks;
         attacks.innerText = attackStack;
+    }
+
+    function performAttacks(attacks) {
+        for(let a of attacks) {
+            cards[a].attack();
+        }
+        console.log(heroes);
     }
 
     function init() {
@@ -376,7 +431,7 @@ window.onload = function init() {
         else {
             tile.unlock();
         }
-        console.log(window.isAnyLocked); //TODO: fix this variable
+        //console.log(window.isAnyLocked); //TODO: fix this variable
 
         e.stopPropagation();
     }

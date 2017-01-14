@@ -11,13 +11,35 @@
 
 <body>
     <h1>This game is still in early development, but it'll be awesome once it's done!</h1>
+
+    <!--
     <div id="game">
         <canvas id="canvas">Your browser doesn't support the canvas element. Check this website update your browser: http://browsehappy.com/</canvas>
     </div>
+    -->
 
-    <div id="menu">
-        <p>Current wallet: <span id="money">$100.00</span></p>
-    </div>
+    <table>
+        <tr id="dragon">
+            <td>Dragon</td>
+            <td id="dragon-health">1000</td>
+        </tr>
+        <tr id="warrior" class="heroes">
+            <td>Warrior</td>
+            <td id="warrior-health">100</td>
+        </tr>
+        <tr id="rogue" class="heroes">
+            <td>Rogue</td>
+            <td id="rogue-health">80</td>
+        </tr>
+        <tr id="wizard" class="heroes">
+            <td>Wizard</td>
+            <td id="wizard-health">50</td>
+        </tr>
+        <tr id="money">
+            <td>Current wallet:</td>
+            <td id="money-amount">$100.00</td>
+        </tr>
+    </table>
 
     <div id="slots"></div>
 
