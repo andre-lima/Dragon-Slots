@@ -10,6 +10,19 @@ html {
     background-image: url("../images/tile_dungeon.png");
 }
 
+#game-status {
+    z-index: 10;
+    color: red;
+    padding: 15px;
+    font-size: 26pt;
+    border-radius: 1em;
+    border: 2px solid white;
+    background: black;
+    position: absolute;
+    right: 35%;
+    bottom: 45%;
+}
+
 body {
 
     max-width: 800px;

@@ -1,5 +1,8 @@
 "use strict";
 
+//Count dead heroes
+let howManyDead = 0;
+
 //Character constructor
 function Character(classType, health) {
     this.classType = classType;
@@ -17,6 +20,13 @@ function Character(classType, health) {
         if(this.health <= 0){
             this.health = 0;
             this.isDead = true;
+            howManyDead++;
+
+            //CHANGE THIS LATER
+            if(howManyDead >= 3)
+            document.getElementById('game-status').innerHTML = "YOU'RE DEAD! Refresh to play again...";
+            ///////
+
             this.htmlElement.classList.add('dead');
         }
 

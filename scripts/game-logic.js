@@ -81,6 +81,7 @@ let cards = {
         title: "claw",
         character: dragon,
         action: function (){
+            if(howManyDead >= heroes.length) return;
             let hero;
             do {
                 hero = heroes[Math.floor(Math.random()*heroes.length)];
