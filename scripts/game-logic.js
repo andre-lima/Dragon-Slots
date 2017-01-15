@@ -99,9 +99,9 @@ let cards = {
         title: "chest",
         character: "undefined",
         action: function (){
-            console.log("+1 gold!");
+            updateMoney(-this.damage);
         },
-        damage: 0,
+        damage: 5,
         probability: 1,
         image: "images/chest.png"
     }

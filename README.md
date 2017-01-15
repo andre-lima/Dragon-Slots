@@ -15,9 +15,9 @@ https://andre-lima.github.io/Dragon-Slots/
 - Beware of the Claw Attack tile. It'll cause one of your heroes damage.
 - After each roll, the dragon charges his fire attack a bit. Once it's reached 100%, all heroes will receive the attack.
 - Once one hero is dead, the tiles related to the hero skills can no longer perform its actions.
-- You can click/tap a tile to lock it for the next round. Rolling or clicking on it again, makes the tile unlock.
-
-(soon, rules regarding the money in-game)
+- You can click/tap a tile to lock it for the next round. This costs $1 per locked tile. Rolling or clicking on it again, makes the tile unlock.
+- Get a sequence of chests and get more money.
+(soon, more rules regarding the money in-game)
 
 *Characters:*
 
@@ -35,7 +35,3 @@ https://andre-lima.github.io/Dragon-Slots/
 **Wizard**
 - Lightning attack causes a lot of damage.
 - Healing gives more health to all heroes.
-
-
-### Known Issues
-You can still lock Wild Cards and that unbalances the game design at this point.

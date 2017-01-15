@@ -49,6 +49,13 @@ body {
     border: 10px solid white;
 }
 
+#money {
+    display: block;
+    text-align: center;
+    font-size: 16pt;
+    text-shadow: 1px 1px yellow;
+}
+
 .win {
     border: 10px solid black;
 }

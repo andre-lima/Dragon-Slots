@@ -13,6 +13,15 @@ const images_array = [
     (new Image()).src = "images/claw.png"
 ];
 
+//Managing money
+let money = 200;
+let cost = 1;
+let moneyElement = document.querySelector('#money');
+function updateMoney(cost){
+    money -= cost;
+    moneyElement.innerHTML = "$" + money.toFixed(2);
+}
+
 //Game constructor
 var GameSlots = function() {
 
@@ -86,6 +95,8 @@ var GameSlots = function() {
 
     //Check if the player won and pushes the winnings on the attack stack
     function checkVictoryConditions() {
+        updateMoney(cost);
+
         let points = 0;
         attackStack = [];
 
@@ -203,6 +214,7 @@ function lockTiles(e) {
 
     //Toggle lock state
     if (!tile.locked && !isAnyLocked) {
+        updateMoney(1);
         tile.lock();
         isAnyLocked = true;
     } else if (tile.locked && isAnyLocked) {
