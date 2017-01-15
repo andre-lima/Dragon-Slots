@@ -49,7 +49,7 @@ var GameSlots = function() {
 
     //Randomize tiles
     function randomTiles() {
-        startGame = true;
+        startGame = true; //Once game starts, we can click and lock tiles
 
         let keys = Object.keys(cards);
 
@@ -80,6 +80,7 @@ var GameSlots = function() {
         //After new tiles is set, it check if the player won.
         checkVictoryConditions();
 
+        //After everyone attacks, tests if the dragon will use fire breath
         dragon.fireAttack(5);
     }
 
@@ -121,9 +122,11 @@ var GameSlots = function() {
             //if(usingWild && typeOfAttack === "claw")
             //continue;
 
+            //Shouldn't happen
             if (typeof typeOfAttack === "undefined")
                 console.error("3 WILD CARDS IN A ROW");
 
+            //Dragon attacking
             if (winner && (typeOfAttack === "claw")) {
                 ++dragonAttacks;
                 attackStack.push(typeOfAttack);
@@ -131,31 +134,31 @@ var GameSlots = function() {
                     e.highlight();
                 winner = false;
             }
+            //Hero attacking
             if (winner) {
                 for (let e of elements)
                     e.highlight();
-                if(!cards[typeOfAttack].character.isDead){
+                if (!cards[typeOfAttack].character.isDead) {
                     attackStack.push(typeOfAttack);
                     ++amountOfWins;
                 }
             }
 
         }
-        if(attackStack.length > 0)
+        if (attackStack.length > 0)
             performAttacks(attackStack);
 
         amountOfPlays++;
-
-        //Temp statistics
-        //stats.innerText = "Wins: " + amountOfWins + " (" + (amountOfWins * 100 / amountOfPlays).toFixed() + "%)" + "; Dragon attacks: " + dragonAttacks;
-        //attacks.innerText = attackStack;
     }
 
     function performAttacks(attacks) {
-        let timer = 400, i = 1;
-        for(let a of attacks) {
+        let timer = 400,
+            i = 1;
+        for (let a of attacks) {
             //Add a delay so the attacks occurs on a visible order
-            setTimeout(function() {cards[a].action();}, timer * i++);
+            setTimeout(function() {
+                cards[a].action();
+            }, timer * i++);
         }
 
     }
@@ -191,17 +194,18 @@ function lockTiles(e) {
 
     let tgt = e.target.parentNode.getAttribute("data-tile");
 
-    if(tgt === null || !startGame) return;
+    //Return if clicking on the wrong place or clicking on the dungeon tiles
+    if (tgt === null || !startGame) return;
 
     let tileCoord = tgt.split(",");
 
     let tile = tiles[tileCoord[0]][tileCoord[1]];
 
-    if(!tile.locked && !isAnyLocked){
+    //Toggle lock state
+    if (!tile.locked && !isAnyLocked) {
         tile.lock();
         isAnyLocked = true;
-    }
-    else if(tile.locked && isAnyLocked){
+    } else if (tile.locked && isAnyLocked) {
         isAnyLocked = false;
         tile.unlock();
     }

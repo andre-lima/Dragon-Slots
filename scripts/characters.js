@@ -1,5 +1,6 @@
 "use strict";
 
+//Character constructor
 function Character(classType, health) {
     this.classType = classType;
     this.health = health;
@@ -7,8 +8,12 @@ function Character(classType, health) {
     this.isShielded = false;
     this.isDead = false;
     this.htmlElement = document.getElementById(this.classType);
+
+    //Use when dealing damage
     this.receiveDamage = function(damage) {
         this.health -= damage;
+
+        //Limits health to 0
         if(this.health <= 0){
             this.health = 0;
             this.isDead = true;
@@ -21,9 +26,12 @@ function Character(classType, health) {
         element.classList.add('hit');
         setTimeout(function() {element.classList.remove('hit');},200);
     }
+
+    //Use when healing
     this.healDamage = function(amount) {
         if(this.isDead) return;
 
+        //Limits health to max
         this.health += amount;
         if(this.health >= this.maxHealth){
             this.health = this.maxHealth;
@@ -37,6 +45,7 @@ function Character(classType, health) {
     }
 }
 
+//Instantiate dragon and add properties
 let dragon = new Character("dragon", 1000);
 dragon.fireAttack = function(amount) {
     this.fireCharge += amount;
@@ -54,6 +63,7 @@ dragon.fireAttack = function(amount) {
 dragon.fireCharge = 0;
 dragon.fireDamage = 20;
 
+//Instantiate heroes
 let warrior = new Character("warrior", 200);
 let rogue = new Character("rogue", 150);
 let wizard = new Character("wizard", 100);

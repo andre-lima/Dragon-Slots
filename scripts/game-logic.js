@@ -14,6 +14,7 @@ let cards = {
     wild: {
         title: "WILD",
         character: "undefined",
+        //Action is the behavior for each of the cards when a sequence is achieved
         action: function (){console.error("attacking from a wild card...wut???");},
         damage: 0,
         probability: 1,
