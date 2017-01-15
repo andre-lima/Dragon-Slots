@@ -14,6 +14,7 @@ function Character(classType, health) {
 
     //Use when dealing damage
     this.receiveDamage = function(damage) {
+        if(this.isDead) return;
         this.health -= damage;
 
         //Limits health to 0
@@ -23,8 +24,9 @@ function Character(classType, health) {
             howManyDead++;
 
             //CHANGE THIS LATER
-            if(howManyDead >= 3)
-            document.getElementById('game-status').innerHTML = "YOU'RE DEAD! Refresh to play again...";
+            if(howManyDead >= 3){
+                document.getElementById('game-status').innerHTML = "YOU'RE DEAD! Refresh to play again...";
+            }
             ///////
 
             this.htmlElement.classList.add('dead');
@@ -65,7 +67,8 @@ dragon.fireAttack = function(amount) {
     if(this.fireCharge === 100) {
         let self = this;
         heroes.forEach(function(hero) {
-            hero.receiveDamage(self.fireDamage);
+            if(!hero.isDead)
+                hero.receiveDamage(self.fireDamage);
         });
         this.fireCharge = 0;
     }
