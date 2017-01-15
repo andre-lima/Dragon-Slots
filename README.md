@@ -38,4 +38,4 @@ https://andre-lima.github.io/Dragon-Slots/
 
 
 ### Known Issues
-...
+You can still lock Wild Cards and that unbalances the game design at this point.
