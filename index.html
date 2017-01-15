@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <h1>This game is still in early development, but it'll be awesome once it's done!</h1>
+    <h1>Dragon Slots</h1>
+    <h2>www.andredantas.com</h2>
 
     <!--
     <div id="game">
@@ -22,36 +23,44 @@
         <div id="heroes">
             <div class="hero" id="warrior">
                 <div><img src="images/warrior.png" alt="warrior" /></div>
-                <p class="health" id="warrior-health">100 </p>
+                <p class="health" id="warrior-health">200 </p>
                 <img src="images/shield.png" alt="shield" id="warrior-shield" class="hero-shields hide" />
             </div>
             <div class="hero" id="rogue">
                 <div><img src="images/rogue.png" alt="rogue" /></div>
-                <p class="health" id="rogue-health">80 </p>
+                <p class="health" id="rogue-health">150 </p>
                 <img src="images/shield.png" alt="shield" id="rogue-shield" class="hero-shields hide" />
             </div>
             <div class="hero" id="wizard">
                 <div><img src="images/wizard.png" alt="wizard" /></div>
-                <p class="health" id="wizard-health">50 </p>
+                <p class="health" id="wizard-health">100 </p>
                 <img src="images/shield.png" alt="shield" id="wizard-shield" class="hero-shields hide" />
             </div>
         </div>
         <div id="dragon" class="">
             <div><img src="images/dragon.png" alt="dragon" /></div>
+            <div id="fire-progress">
+              <p id="fire-title">Fire Breath Attack</p>
+              <div id="fire-value"></div>
+            </div>
             <p class="health" id="dragon-health">1000</p>
         </div>
     </div>
 
+    <div>
+    <input type="button" id="roll" value="ROLL!" />
+    </div>
     <div id="slots"></div>
 
-    <input type="button" id="roll" value="ROLL AGAIN!" />
-
-
+<!--
     <h2 id="stats"></h2>
     <p>Attacks: </p>
     <p id="attacks"></p>
+-->
 
-    <script src="scripts/main.js"></script>
+    <script src="scripts/characters.js"></script>
+    <script src="scripts/game-logic.js"></script>
+    <script src="scripts/slots.js"></script>
 
 </body>
 

@@ -23,6 +23,7 @@ body {
     display: flex;
     width: 350px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .tile {
@@ -40,6 +41,12 @@ body {
 }
 
 .locked {
+    border: 10px solid red;
+    filter: grayscale(1);
+}
+
+.dead {
+    border: 10px solid red;
     filter: grayscale(1);
 }
 
@@ -61,6 +68,13 @@ canvas {
     height: 250px;
 }
 
+#roll {
+    padding: 10px;
+    font-size: 12pt;
+    margin: 5px auto;
+    display: block;
+}
+
 .hero, #dragon {
     border: 8px solid white;
 }
@@ -76,7 +90,7 @@ canvas {
 }
 
 .hero img {
-    width: 60px;
+    width: 75px;
 }
 
 #dragon img {
@@ -108,6 +122,26 @@ p { display: inline;}
     display: none;
 }
 
+#fire-progress {
+  background-color: black;
+  border-radius: 1em; /* (height of inner div) / 2 + padding */
+  margin: 5px;
+  padding: 3px;
+}
+
+#fire-progress > div {
+   background-color: red;
+   width: 0%; /* Adjust with JavaScript */
+   height: 20px;
+   border-radius: 10px;
+}
+
+#fire-title {
+    font-size: 12pt;
+    color: white;
+    position: absolute;
+}
+
 @media screen and (max-width: 750px)
 {
     #characters {
@@ -115,7 +149,7 @@ p { display: inline;}
         margin: 5px auto;
     }
     .hero img {
-        width: 40px;
+        width: 60px;
     }
 
     #dragon img {
